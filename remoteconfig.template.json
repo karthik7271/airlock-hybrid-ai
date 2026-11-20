@@ -1,0 +1,67 @@
+{
+  "parameters": {
+    "cloud_model": {
+      "defaultValue": {
+        "value": "gemini-3.8-flash"
+      },
+      "valueType": "STRING",
+      "description": "Cloud model for deep analysis and reply drafting (redacted text only)"
+    },
+    "fast_cloud_model": {
+      "defaultValue": {
+        "value": "gemini-3.5-flash-lite"
+      },
+      "valueType": "STRING",
+      "description": "Cloud fallback for redacted-safe tasks: question routing and jargon"
+    },
+    "device_chunk_chars": {
+      "defaultValue": {
+        "value": "2400"
+      },
+      "valueType": "NUMBER",
+      "description": "Max characters per Gemini Nano shield pass"
+    },
+    "offline_device_analysis": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Analysis uses PREFER_IN_CLOUD so it can fall back to Gemini Nano offline; false forces ONLY_IN_CLOUD"
+    },
+    "device_shield_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Run the Gemini Nano shield pass on top of the rule-based shield"
+    },
+    "cloud_history_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Save redacted cases to Firestore (vaults always stay on device)"
+    },
+    "prompt_version": {
+      "defaultValue": {
+        "value": "2026-11-17"
+      },
+      "valueType": "STRING",
+      "description": "Prompt set version, for A/B testing prompt changes"
+    },
+    "thinking_level": {
+      "defaultValue": {
+        "value": ""
+      },
+      "valueType": "STRING",
+      "description": "Thinking level for analysis, answers and drafts (MINIMAL|LOW|MEDIUM|HIGH)"
+    },
+    "fast_thinking_level": {
+      "defaultValue": {
+        "value": ""
+      },
+      "valueType": "STRING",
+      "description": "Thinking level for routing and jargon fallbacks"
+    }
+  }
+}
