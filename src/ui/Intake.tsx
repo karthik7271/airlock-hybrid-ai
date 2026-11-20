@@ -119,9 +119,6 @@ export function Intake({ busy, transcript, onText, onImage, history, onOpenCase,
             <div className="sample-grid">
               {SAMPLE_LETTERS.map((s) => (
                 <button key={s.id} className="sample" disabled={!!busy} onClick={() => onText(s.text, s.title)}>
-                  <span className="ic" aria-hidden="true">
-                    {s.icon}
-                  </span>
                   <b>{s.title}</b>
                   <span>{s.blurb}</span>
                 </button>
@@ -150,8 +147,8 @@ export function Intake({ busy, transcript, onText, onImage, history, onOpenCase,
                 <div className="grow">
                   <div className="t">{c.title}</div>
                   <div className="s">
-                    {c.docType} · {c.protectedCount} details protected ·{" "}
-                    {c.hasVault ? "vault on this device" : "vault not on this device, placeholders only"}
+                    {c.docType}. {c.protectedCount} details protected.{" "}
+                    {c.hasVault ? "Your vault is on this device." : "Your vault isn't on this device, so you'll see placeholders."}
                   </div>
                 </div>
                 <button className="btn ghost small" onClick={() => onOpenCase(c)}>

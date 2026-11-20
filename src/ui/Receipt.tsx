@@ -79,7 +79,7 @@ export function Receipt({ onClose, protectedCount }: { onClose: () => void; prot
                     <span className="ms">{e.ms} ms</span>
                   </div>
                   <div className="note">
-                    {TIER_INFO[e.tier].label} · <code>{e.mode}</code> · {new Date(e.at).toLocaleTimeString()}
+                    {TIER_INFO[e.tier].label} at {new Date(e.at).toLocaleTimeString()}, mode <code>{e.mode}</code>
                   </div>
                   {e.note && <div className="note">{e.note}</div>}
                   {e.outbound && (

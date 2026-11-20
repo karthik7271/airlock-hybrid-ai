@@ -44,13 +44,13 @@ export function TopBar({ device, online, onHome, onReceipt }: { device: DeviceIn
       <div className="spacer" />
       {!online && (
         <span className="pill" role="status">
-          <span className="dot warn" /> <span className="lbl">Offline: on-device only</span>
+          <span className="dot warn" /> <span className="lbl-dev">Offline</span>
         </span>
       )}
       <div style={{ position: "relative" }} ref={ref}>
         <button className="pill" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
           <span className={`dot ${dotClass}`} />
-          <span className="lbl">{short}</span>
+          <span className="lbl-dev">{short}</span>
         </button>
         {open && (
           <div className="device-pop" role="dialog" aria-label="On-device model">

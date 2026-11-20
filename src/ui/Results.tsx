@@ -78,9 +78,10 @@ export function Results(p: Props) {
 
         {scam && (
           <div className="scam" role="alert">
-            <span style={{ fontSize: 28 }} aria-hidden="true">
-              ⚠️
-            </span>
+            <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+              <path d="M14 3 26 24H2L14 3Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              <path d="M14 11v6M14 20.5v.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
             <div>
               <h2>This letter shows signs of a scam</h2>
               <ul>
