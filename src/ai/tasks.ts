@@ -117,17 +117,27 @@ async function call(task: string, spec: ModelSpec, prompt: string | Array<string
     });
     return { text: res.response.text(), where };
   } catch (e) {
+    // Cloud overload (429/500/503): retry once on the lighter model instead of failing the user.
+    if (isOverload(e) && spec.tier !== "device-only" && spec.cloudModel !== "fast_cloud_model") {
+      return call(task, { ...spec, cloudModel: "fast_cloud_model" }, prompt);
+    }
     return fail(task, spec, t0, e);
   }
+}
+
+function isOverload(e: unknown): boolean {
+  return /\[(429|500|503) |high demand|overloaded/i.test(String((e as Error)?.message ?? e));
 }
 
 /** Streaming variant: yields text as it arrives, records the ledger entry at the end. */
 async function* stream(task: string, spec: ModelSpec, prompt: string): AsyncGenerator<{ delta: string; where: Where }> {
   const t0 = performance.now();
   let where: Where = "in_cloud";
+  let started = false;
   try {
     const res = await model(spec).generateContentStream(prompt);
     for await (const chunk of res.stream) {
+      started = true;
       where = whereOf(chunk.inferenceSource);
       yield { delta: chunk.text(), where };
     }
@@ -140,6 +150,10 @@ async function* stream(task: string, spec: ModelSpec, prompt: string): AsyncGene
       outbound: where === "in_cloud" ? prompt : undefined,
     });
   } catch (e) {
+    if (!started && isOverload(e) && spec.tier !== "device-only" && spec.cloudModel !== "fast_cloud_model") {
+      yield* stream(task, { ...spec, cloudModel: "fast_cloud_model" }, prompt);
+      return;
+    }
     fail(task, spec, t0, e);
   }
 }
